@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">TicTacToe</string>
-    <string name="playerTurnTextView">Start a New Game to play </string>
-    <string name="new_game_button">New Game</string>
+    <string name="new_game_Btn_Txt">New Game</string>
+    <string name="status_Text">Start a new game?</string>
 </resources>

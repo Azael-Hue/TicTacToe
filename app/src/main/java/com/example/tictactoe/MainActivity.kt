@@ -1,7 +1,6 @@
 package com.example.tictactoe
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +12,19 @@ import com.example.tictactoe.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    lateinit var btn1: Button
+    lateinit var btn2: Button
+    lateinit var btn3: Button
+    lateinit var btn4: Button
+    lateinit var btn5: Button
+    lateinit var btn6: Button
+    lateinit var btn7: Button
+    lateinit var btn8: Button
+    lateinit var btn9: Button
+
+    lateinit var playerTurn: TextView
+    lateinit var newGameButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,51 +38,33 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
-    // Get all the buttons from left to right top to bottom
-    val btn1: Button = binding.button1
-    val btn2: Button = binding.button2
-    val btn3: Button = binding.button3
-    val btn4: Button = binding.button4
-    val btn5: Button = binding.button5
-    val btn6: Button = binding.button6
-    val btn7: Button = binding.button7
-    val btn8: Button = binding.button8
-    val btn9: Button = binding.button9
 
-    // Get the TextView to change text
-    val turnText: TextView = binding.playerTurnTextView
+        // Assign each btn var to a button from left to right top to bottom
+        btn1 = binding.button1
+        btn2 = binding.button2
+        btn3 = binding.button3
+        btn4 = binding.button4
+        btn5 = binding.button5
+        btn6 = binding.button6
+        btn7 = binding.button7
+        btn8 = binding.button8
+        btn9 = binding.button9
 
-    // Keep a track of who's turn it is with a boolean value
-    var isPlayerXTurn = true
+        playerTurn = binding.playerStatusTxt
+        newGameButton = binding.newGameBtn
 
-    // This method should start a New Game by making all
-    // the buttons blank and starting with player X's turn
-    fun startNewGame(view: View) {
-        val arrayOfButtons: Array<Button> = arrayOf(btn1, btn2, btn3,
-                                                    btn4, btn5, btn6,
-                                                    btn7, btn8, btn9)
-        for (item in arrayOfButtons){
-            item.text = ""
-        }
+        newGameButton.setOnClickListener() {
+            btn1.text = ""
+            btn2.text = ""
+            btn3.text = ""
+            btn4.text = ""
+            btn5.text = ""
+            btn6.text = ""
+            btn7.text = ""
+            btn8.text = ""
+            btn9.text = ""
 
-        turnText.text = "Player X's Turn"
-        isPlayerXTurn = true
-    }
-
-    // Stopped working here, The app keeps on crashing
-    fun btnLayoutTouch(btn: Button) {
-        if (!btn.text.isNotEmpty()) {
-            if (isPlayerXTurn) {
-                btn.text = "X"
-                isPlayerXTurn = false
-                turnText.text = "Player O's Turn"
-            }
-            else {
-                btn.text = "O"
-                isPlayerXTurn = true
-                turnText.text = "Player X's Turn"
-            }
+            playerTurn.text = "Player X's Turn"
         }
     }
 }
