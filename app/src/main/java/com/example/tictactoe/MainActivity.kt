@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    // Use lateinit to declare the 9 buttons
+    // in the Tic-Tac-Toe board/layout
     lateinit var btn1: Button
     lateinit var btn2: Button
     lateinit var btn3: Button
@@ -23,8 +25,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var btn8: Button
     lateinit var btn9: Button
 
-    lateinit var playerTurn: TextView
-    lateinit var newGameButton: Button
+    lateinit var playerTurn: TextView   // The Text View that states who's turn it is
+    lateinit var newGameButton: Button  // The button we use to start a new game
+    var currentPlayer = "X"             // The first player will always be X
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,20 +56,43 @@ class MainActivity : AppCompatActivity() {
         playerTurn = binding.playerStatusTxt
         newGameButton = binding.newGameBtn
 
-        newGameButton.setOnClickListener() {
-            btn1.text = ""
-            btn2.text = ""
-            btn3.text = ""
-            btn4.text = ""
-            btn5.text = ""
-            btn6.text = ""
-            btn7.text = ""
-            btn8.text = ""
-            btn9.text = ""
+        // Make an array to access the buttons in the layout
+        val layoutButtons = arrayOf(btn1, btn2, btn3,
+                                    btn4, btn5, btn6,
+                                    btn7, btn8, btn9)
 
+        for (button in layoutButtons) {
+            button.setOnClickListener{ boardChange(button) }
+        }
+
+        newGameButton.setOnClickListener() {
+            // Delete the text from each button
+            for (button in layoutButtons) {
+                button.text = ""
+            }
+
+            currentPlayer = "X"
             playerTurn.text = "Player X's Turn"
         }
     }
+
+    fun boardChange(button: Button) {
+        if (button.text.isEmpty()) {
+            button.text = currentPlayer
+
+            if (currentPlayer == "X") {
+                currentPlayer = "O"
+                playerTurn.text = "Player O's Turn"
+            }
+
+            else {
+                currentPlayer = "X"
+                playerTurn.text = "Player X's Turn"
+            }
+        }
+    }
+
+
 }
 
 
