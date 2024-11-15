@@ -25,10 +25,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var btn8: Button
     lateinit var btn9: Button
 
-    lateinit var playerTurn: TextView   // The Text View that states who's turn it is
+    lateinit var currStatusText: TextView   // The Text View that states who's turn it is
     lateinit var newGameButton: Button  // The button we use to start a new game
     var currentPlayer = "X"             // A string variable that keeps track of the player, starting with X
     var isGameGoing = true              // A boolean to keep track of if the game is still going
+
+    // Declare an array of buttons that will be populated when the onCreate method is called
+    lateinit var layoutButtons: Array<Button>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,13 +57,12 @@ class MainActivity : AppCompatActivity() {
         btn8 = binding.button8
         btn9 = binding.button9
 
-        playerTurn = binding.playerStatusTxt
+        currStatusText = binding.playerStatusTxt
         newGameButton = binding.newGameBtn
 
-        // Make an array to access the buttons in the layout more easily
-        val layoutButtons = arrayOf(btn1, btn2, btn3,
-                                    btn4, btn5, btn6,
-                                    btn7, btn8, btn9)
+        // Populate the Array of buttons with the buttons in the 3x3 layout
+        layoutButtons = arrayOf(btn1, btn2, btn3, btn4,
+                                btn5, btn6, btn7, btn8, btn9)
 
         // for each button on the layout
         // set an onClickListener, if the button is
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             currentPlayer = "X"
-            playerTurn.text = "Player $currentPlayer's Turn"
+            currStatusText.text = "Player $currentPlayer's Turn"
             isGameGoing = true
         }
     }
@@ -97,19 +99,25 @@ class MainActivity : AppCompatActivity() {
     // the current player's letter
     // once done it will call the method gameWinCondition
     // to see if the player has won, if so end the game
-    // else change the players turn and text to say who's turn's it is
+    // else if the board is full end the game otherwise
+    // change the players turn and text to say who's turn's it is
     fun boardChange(button: Button) {
         if (button.text.isEmpty()) {
             button.text = currentPlayer
 
             if (gameWinCondition()) {
-                playerTurn.text = "Player $currentPlayer Wins!!!"
+                currStatusText.text = "Player $currentPlayer Wins!!!"
+                isGameGoing = false
+            }
+
+            else if ( isBoardFull() ) {
+                currStatusText.text = "It's a tie"
                 isGameGoing = false
             }
 
             else {
                 currentPlayer = if (currentPlayer == "X") "O" else "X"
-                playerTurn.text = "Player $currentPlayer's turn"
+                currStatusText.text = "Player $currentPlayer's turn"
             }
         }
     }
@@ -142,20 +150,16 @@ class MainActivity : AppCompatActivity() {
 
         return false
     }
+
+    // This method when called will check through all the buttons
+    // and see if the text has been filled, if all the butttons
+    // are filled return true
+    fun isBoardFull(): Boolean {
+        for (button in layoutButtons) {
+            if ( button.text.isEmpty() ) {
+                return false
+            }
+        }
+        return true
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
